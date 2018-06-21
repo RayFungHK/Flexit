@@ -20,6 +20,18 @@
 }
 
 /* Grid Container */
+.flex.f-reverse {
+	flex-direction: row-reverse;
+}
+
+.flex.f-row {
+	flex-direction: column;
+}
+
+.flex.f-row.f-reverse {
+	flex-direction: column-reverse;
+}
+
 .flex.f-top {
 	-ms-flex-align: start;
 	-webkit-box-align: start;
