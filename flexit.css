@@ -131,6 +131,7 @@
 
 .flex > .col {
   flex-grow: 1;
+	flex-shrink: 1;
 }
 
 .flex > .col-1 {
