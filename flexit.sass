@@ -1,0 +1,155 @@
+// Flexbox Setting
+// Define $flexbox as .flexbox
+// Default: flex-wrap: wrap, align-items: flex-start */
+$flexbox: ".flexbox"
+$item: ".item"
+#{$flexbox}
+  display: flex
+  flex-wrap: wrap
+  align-items: flex-start
+
+  // Flexbox vertical and reverse
+  &.fi-reverse
+    flex-direction: row-reverse
+  &.fi-vertical
+    flex-direction: column
+    &.fi-reverse
+      flex-direction: column-reverse
+
+  // Flexbox item initialize
+  & > *
+    box-sizing: border-box
+    flex: 0 0 auto
+
+  // Flexbox Properties
+  &.fi-inline
+    display: inline-flex
+
+  &.fi-nowrap
+    flex-wrap: nowrap
+
+  // Flexbox Alignment
+  $vertical-alignments: "top" flex-start, "bottom" flex-end, "middle" center, "fill" stretch
+  @each $name, $value in $vertical-alignments
+    &.fi-#{$name}
+      align-items: $value
+
+  $alignments: "left" flex-start, "right" flex-end, "center" center, "around" space-around, "between" space-between, "evenly" space-evenly
+  @each $name, $value in $alignments
+    &.fi-#{$name}
+      justify-content: $value
+
+  // Shorten Properties Combination
+  &.fi-btn-group
+    @extend .fi-inline
+    @extend .fi-nowrap
+
+  &.fi-nav
+    @extend .fi-fill
+    @extend .fi-nowrap
+
+  &.fi-nav-wide
+    @extend .fi-fill
+    @extend .fi-nowrap
+    @extend .fi-between
+
+  &.fi-abs-center
+    @extend .fi-center
+    @extend .fi-middle
+
+  // Gutters
+  $units: "" 1rem, "-px" 10px, "-em" 1em, "-mm" 1mm
+  $gutters-size: "-s" 0.5, "" 1, "-l" 1.5, "-xl" 2, "-xxl" 3
+
+  &.fi-gutters
+    @each $unit, $base in $units
+      @each $size, $multiplier in $gutters-size
+        &#{$unit + $size}
+          top: -$base * $multiplier
+          left: -$base * $multiplier
+          margin-right: -$base * $multiplier
+          margin-bottom: -$base * $multiplier
+          & > *
+            padding-top: $base * $multiplier
+            padding-left: $base * $multiplier
+
+
+  // Gutters siblings and childs adjustment
+  &[class*="fi-gutters"]
+    position: relative
+
+    & > #{$flexbox}[class*="fi-gutters"]
+      padding: 0
+      margin: 0
+      top: 0
+      left: 0
+
+    &.vertical
+      & + #{$flexbox}
+        &[class*="fi-gutters"]
+          margin: 0
+
+    @each $unit, $base in $units
+      @each $size, $multiplier in $gutters-size
+        & + #{$flexbox}
+          &.fi-gutters
+            &#{$unit + $size}
+              margin-top: $base * $multiplier
+
+  // Item division
+  & > #{$item}
+    flex-grow: 1
+    flex-shrink: 1
+
+  $division-size: 1 2 3 4 5 6 8 10 12
+  @each $size in $division-size
+    & > #{$item}-#{$size}
+      width: 100% / $size
+
+  &.vertical
+    & > *
+      width: auto
+
+    @each $size in $division-size
+      & > #{$item}-#{$size}
+        height: 100% / $size
+
+  // Pop & Shift
+  & > #{$item}-pop
+    margin: 0 0 0 auto
+
+  & > #{$item}-shift
+    margin: 0 auto 0 0
+
+  &.fi-vertical
+    & > #{$item}-pop
+      margin: 0 0 auto
+    & > #{$item}-shift
+      margin: auto 0 0
+
+  &.fi-reverse
+    & > #{$item}-shift
+      margin: 0 0 0 auto
+    & > #{$item}-pop
+      margin: 0 auto 0 0
+    &.fi-vertical
+      & > #{$item}-pop
+        margin: auto 0 0
+      & > #{$item}-shift
+        margin: 0 0 auto
+
+// Responsive Web Design
+$screen-media: "md" 1200, "sm" 992, "xs" 768
+@mixin rwd($code, $point)
+  @media (max-width: $point + 'px')
+    $division-size: 1 2 3 4 5 6
+    @each $size in $division-size
+      #{$flexbox}
+        & > #{$item}-#{$code}-#{$size}
+          width: 100% / $size
+    #{$flexbox}.vertical
+      & > *
+        width: auto
+
+@each $code, $width in $screen-media
+  @include rwd($code, $width)
