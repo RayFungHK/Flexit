@@ -106,10 +106,8 @@ $scale-factor: .8
     flex-shrink: 1
 
   @each $size in $partition-size
-    & > #{$item}-#{$size}
-      width: 100% / $size
-    // Auto adjust the width in each breakpoint and divided by 2 each
-    & > #{$item}-rwd-#{$size}
+    // -rwd will auto adjust the width in each breakpoint and divided by 2 each
+    & > #{$item}-#{$size}, & > #{$item}-rwd-#{$size}
       width: 100% / $size
 
   &.vertical
