@@ -259,6 +259,7 @@ h1 {
   background: hsl(192, 19%, 98%);
   margin-bottom: 1rem;
   position: relative;
+  overflow: hidden;
 }
 
 .container:before {
