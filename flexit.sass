@@ -3,6 +3,7 @@
 // Default: flex-wrap: wrap, align-items: flex-start */
 $flexbox: ".flexbox"
 $item: ".item"
+$container-prefix: "fi-"
 $partition-size: 1 2 3 4 5 6 8 10 12
 $partition-min-size: 100
 $scale-factor: .8
@@ -13,11 +14,11 @@ $scale-factor: .8
   align-items: flex-start
 
   // Flexbox vertical and reverse
-  &.fi-reverse
+  &.#{$container-prefix}reverse
     flex-direction: row-reverse
-  &.fi-vertical
+  &.#{$container-prefix}vertical
     flex-direction: column
-    &.fi-reverse
+    &.#{$container-prefix}reverse
       flex-direction: column-reverse
 
   // Flexbox item initialize
@@ -26,46 +27,46 @@ $scale-factor: .8
     flex: 0 0 auto
 
   // Flexbox Properties
-  &.fi-inline
+  &.#{$container-prefix}inline
     display: inline-flex
 
-  &.fi-nowrap
+  &.#{$container-prefix}nowrap
     flex-wrap: nowrap
 
   // Flexbox Alignment
   $vertical-alignments: "top" flex-start, "bottom" flex-end, "middle" center, "fill" stretch
   @each $name, $value in $vertical-alignments
-    &.fi-#{$name}
+    &.#{$container-prefix}#{$name}
       align-items: $value
 
   $alignments: "left" flex-start, "right" flex-end, "center" center, "around" space-around, "between" space-between, "evenly" space-evenly
   @each $name, $value in $alignments
-    &.fi-#{$name}
+    &.#{$container-prefix}#{$name}
       justify-content: $value
 
   // Shorten Properties Combination
-  &.fi-btn-group
-    @extend .fi-inline
-    @extend .fi-nowrap
+  &.#{$container-prefix}btn-group
+    @extend .#{$container-prefix}inline
+    @extend .#{$container-prefix}nowrap
 
-  &.fi-nav
-    @extend .fi-fill
-    @extend .fi-nowrap
+  &.#{$container-prefix}nav
+    @extend .#{$container-prefix}fill
+    @extend .#{$container-prefix}nowrap
 
-  &.fi-nav-wide
-    @extend .fi-fill
-    @extend .fi-nowrap
-    @extend .fi-between
+  &.#{$container-prefix}nav-wide
+    @extend .#{$container-prefix}fill
+    @extend .#{$container-prefix}nowrap
+    @extend .#{$container-prefix}between
 
-  &.fi-abs-center
-    @extend .fi-center
-    @extend .fi-middle
+  &.#{$container-prefix}abs-center
+    @extend .#{$container-prefix}center
+    @extend .#{$container-prefix}middle
 
   // Gutters
   $units: "" 1rem, "-px" 10px, "-em" 1em, "-mm" 1mm
   $gutters-size: "-s" 0.5, "" 1, "-l" 1.5, "-xl" 2, "-xxl" 3
 
-  &.fi-gutters
+  &.#{$container-prefix}gutters
     @each $unit, $base in $units
       @each $size, $multiplier in $gutters-size
         &#{$unit + $size}
@@ -79,10 +80,10 @@ $scale-factor: .8
 
 
   // Gutters siblings and childs adjustment
-  &[class*="fi-gutters"]
+  &[class*="#{$container-prefix}gutters"]
     position: relative
 
-    & > #{$flexbox}[class*="fi-gutters"]
+    & > #{$flexbox}[class*="#{$container-prefix}gutters"]
       padding: 0
       margin: 0
       top: 0
@@ -90,13 +91,13 @@ $scale-factor: .8
 
     &.vertical
       & + #{$flexbox}
-        &[class*="fi-gutters"]
+        &[class*="#{$container-prefix}gutters"]
           margin: 0
 
     @each $unit, $base in $units
       @each $size, $multiplier in $gutters-size
         & + #{$flexbox}
-          &.fi-gutters
+          &.#{$container-prefix}gutters
             &#{$unit + $size}
               margin-top: $base * $multiplier
 
@@ -125,18 +126,18 @@ $scale-factor: .8
   & > #{$item}-shift
     margin: 0 auto 0 0
 
-  &.fi-vertical
+  &.#{$container-prefix}vertical
     & > #{$item}-pop
       margin: 0 0 auto
     & > #{$item}-shift
       margin: auto 0 0
 
-  &.fi-reverse
+  &.#{$container-prefix}reverse
     & > #{$item}-shift
       margin: 0 0 0 auto
     & > #{$item}-pop
       margin: 0 auto 0 0
-    &.fi-vertical
+    &.#{$container-prefix}vertical
       & > #{$item}-pop
         margin: auto 0 0
       & > #{$item}-shift
