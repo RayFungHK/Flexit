@@ -1,14 +1,14 @@
 // Flexbox Setting
 // Define $flexbox as .flexbox
 // Default: flex-wrap: wrap, align-items: flex-start */
-$flexbox: ".flexbox"
-$item: ".item"
+$flexbox: "flexbox"
+$item: "col"
 $container-prefix: "fi-"
 $partition-size: 1 2 3 4 5 6 8 10 12
 $partition-min-size: 100
 $scale-factor: .8
 
-#{$flexbox}
+.#{$flexbox}
   display: flex
   flex-wrap: wrap
   align-items: flex-start
@@ -82,28 +82,28 @@ $scale-factor: .8
 
   // Gutters siblings and childs adjustment
   &[class*="#{$container-prefix}gutters"]
-    & > #{$flexbox}[class*="#{$container-prefix}gutters"]
+    & > .#{$flexbox}[class*="#{$container-prefix}gutters"]
       padding: 0
       margin: 0
 
     &.vertical
-      & + #{$flexbox}
+      & + .#{$flexbox}
         &[class*="#{$container-prefix}gutters"]
           margin: 0
 
     &:not(.#{$container-prefix}sticky)
-      & + #{$flexbox}:not(.#{$container-prefix}sticky)
+      & + .#{$flexbox}:not(.#{$container-prefix}sticky)
         &[class*="#{$container-prefix}gutters"]
           margin-top: 0
 
   // Item partition
-  & > #{$item}
+  & > .#{$item}
     flex-grow: 1
     flex-shrink: 1
 
   @each $size in $partition-size
     // -rwd will auto adjust the width in each breakpoint and divided by 2 each
-    & > #{$item}-#{$size}, & > #{$item}-rwd-#{$size}
+    & > .#{$item}-#{$size}, & > .#{$item}-rwd-#{$size}
       width: 100% / $size
 
   &.vertical
@@ -111,31 +111,36 @@ $scale-factor: .8
       width: auto
 
     @each $size in $partition-size
-      & > #{$item}-#{$size}
+      & > .#{$item}-#{$size}
         height: 100% / $size
 
+  & > .#{$item}-break
+    flex-basis: 100%
+    width: 0
+    height: 0
+
   // Pop & Shift
-  & > #{$item}-pop
+  & > .#{$item}-pop
     margin: 0 0 0 auto
 
-  & > #{$item}-shift
+  & > .#{$item}-shift
     margin: 0 auto 0 0
 
   &.#{$container-prefix}vertical
-    & > #{$item}-pop
+    & > .#{$item}-pop
       margin: 0 0 auto
-    & > #{$item}-shift
+    & > .#{$item}-shift
       margin: auto 0 0
 
   &.#{$container-prefix}reverse
-    & > #{$item}-shift
+    & > .#{$item}-shift
       margin: 0 0 0 auto
-    & > #{$item}-pop
+    & > .#{$item}-pop
       margin: 0 auto 0 0
     &.#{$container-prefix}vertical
-      & > #{$item}-pop
+      & > .#{$item}-pop
         margin: auto 0 0
-      & > #{$item}-shift
+      & > .#{$item}-shift
         margin: 0 0 auto
 
 // Responsive Web Design
@@ -144,13 +149,43 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
 
 // Mixin for create each breakpoints media query
 @each $code, $min, $max, $partition in $screen-media
-  @media (min-width: $min + 'px') and (max-width: $max + 'px')
+  // Progressively by max-width
+  @media (max-width: $max + 'px')
+    .#{$flexbox}
+      & > .#{$item}-pg-#{$code}-break
+        display: block
+        flex-basis: 100%
+        width: 0
+        height: 0
+
     @for $index from 1 through length($partition-size)
       $size: nth($partition-size, $index)
       $mppb: floor($min / $partition-min-size)
       @if $size <= $mppb
-        #{$flexbox}
-          & > #{$item}-#{$code}-#{$size}
+        .#{$flexbox}
+          & > .#{$item}-pg-#{$code}-#{$size}
+            width: 100% / $size
+
+    // Vertical flexbox has no width
+    .#{$flexbox}.vertical
+      & > *
+        width: auto
+
+  // Breakpoint range
+  @media (min-width: $min + 'px') and (max-width: $max + 'px')
+    .#{$flexbox}
+      & > .#{$item}-#{$code}-break
+        display: block
+        flex-basis: 100%
+        width: 0
+        height: 0
+
+    @for $index from 1 through length($partition-size)
+      $size: nth($partition-size, $index)
+      $mppb: floor($min / $partition-min-size)
+      @if $size <= $mppb
+        .#{$flexbox}
+          & > .#{$item}-#{$code}-#{$size}
             width: 100% / $size
       @if $partition < length($partition-size)
         // Calculate the scale rate after the partition number has changed
@@ -162,10 +197,10 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
         $offset: min(nth($partition-size, max(ceil($index / $scale), 1)), $index)
         // Generate the rwd item if the offset is not same as current index
         @if $offset != $index
-          #{$flexbox}
-            & > #{$item}-rwd-#{$size}
+          .#{$flexbox}
+            & > .#{$item}-rwd-#{$size}
               width: 100% / $offset
     // Vertical flexbox has no width
-    #{$flexbox}.vertical
+    .#{$flexbox}.vertical
       & > *
         width: auto
