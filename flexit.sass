@@ -70,19 +70,18 @@ $scale-factor: .8
     @each $unit, $base in $units
       @each $size, $multiplier in $gutters-size
         &#{$unit + $size}
+          margin-top: -$base * $multiplier
           margin-left: -$base * $multiplier
           & > *
+            padding-top: $base * $multiplier
             padding-left: $base * $multiplier
-          &#{$container-prefix}top
-            margin-top: -$base * $multiplier
-            & > *
-              padding-top: $base * $multiplier
-
+    &[class*=#{$container-prefix}middle], &[class*=#{$container-prefix}bottom]
+      margin-top: 0
+      & > *
+        padding-top: 0
 
   // Gutters siblings and childs adjustment
   &[class*="#{$container-prefix}gutters"]
-    position: relative
-
     & > #{$flexbox}[class*="#{$container-prefix}gutters"]
       padding: 0
       margin: 0
@@ -92,9 +91,10 @@ $scale-factor: .8
         &[class*="#{$container-prefix}gutters"]
           margin: 0
 
-    & + #{$flexbox}
-      &.#{$container-prefix}gutters
-        margin-top: 0
+    &:not(.#{$container-prefix}sticky)
+      & + #{$flexbox}:not(.#{$container-prefix}sticky)
+        &[class*="#{$container-prefix}gutters"]
+          margin-top: 0
 
   // Item partition
   & > #{$item}
