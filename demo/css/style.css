@@ -240,12 +240,12 @@ h1 {
   padding: 1rem;
 }
 
-[class*='item'] {
+[class*='col'] {
   text-align: center;
   color: hsl(192, 19%, 36%);
 }
 
-[class*='item'] > b {
+[class*='col'] > b {
   display: block;
   background: hsl(192, 19%, 95%);
   padding: 1rem;

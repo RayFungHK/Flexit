@@ -395,6 +395,13 @@
   flex-basis: 100%;
   width: 0;
   height: 0;
+  padding-top: 0;
+  padding-left: 0;
+}
+
+.flexbox > *[class*=col][class*=-break] {
+  padding-top: 0;
+  padding-left: 0;
 }
 
 .flexbox > .col-pop {

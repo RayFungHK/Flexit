@@ -118,6 +118,12 @@ $scale-factor: .8
     flex-basis: 100%
     width: 0
     height: 0
+    padding-top: 0
+    padding-left: 0
+
+  & > *[class*=#{$item}][class*=-break]
+    padding-top: 0
+    padding-left: 0
 
   // Pop & Shift
   & > .#{$item}-pop
