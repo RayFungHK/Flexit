@@ -4,7 +4,7 @@
 $flexbox: "flexbox"
 $item: "col"
 $container-prefix: "fi-"
-$partition-size: 1 2 3 4 5 6 8 10 12
+$partition-size: 1 2 3 4 5 8 10
 $partition-min-size: 100
 $scale-factor: .8
 
@@ -63,7 +63,7 @@ $scale-factor: .8
     @extend .#{$container-prefix}middle
 
   // Gutters
-  $units: "" 1rem, "-px" 10px, "-em" 1em, "-mm" 1mm
+  $units: "" 1rem, "-px" 10px, "-em" 1em
   $gutters-size: "-s" 0.5, "" 1, "-l" 1.5, "-xl" 2, "-xxl" 3
 
   &.#{$container-prefix}gutters
@@ -105,6 +105,10 @@ $scale-factor: .8
     // -rwd will auto adjust the width in each breakpoint and divided by 2 each
     & > .#{$item}-#{$size}, & > .#{$item}-rwd-#{$size}
       width: 100% / $size
+      @if $size > 2
+        @for $index from 2 through $size - 1
+          &-#{$index}
+            width: (100% / $size) * $index
 
   &.vertical
     & > *
@@ -163,6 +167,9 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
         flex-basis: 100%
         width: 0
         height: 0
+      & > .#{$item}-pg-#{$code}
+        flex-grow: 1
+        flex-shrink: 1
 
     @for $index from 1 through length($partition-size)
       $size: nth($partition-size, $index)
@@ -171,6 +178,10 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
         .#{$flexbox}
           & > .#{$item}-pg-#{$code}-#{$size}
             width: 100% / $size
+            @if $size > 2
+              @for $index from 2 through $size - 1
+                &-#{$index}
+                  width: (100% / $size) * $index
 
     // Vertical flexbox has no width
     .#{$flexbox}.vertical
@@ -185,6 +196,9 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
         flex-basis: 100%
         width: 0
         height: 0
+      & > .#{$item}-#{$code}
+        flex-grow: 1
+        flex-shrink: 1
 
     @for $index from 1 through length($partition-size)
       $size: nth($partition-size, $index)
@@ -193,6 +207,10 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
         .#{$flexbox}
           & > .#{$item}-#{$code}-#{$size}
             width: 100% / $size
+            @if $size > 2
+              @for $index from 2 through $size - 1
+                &-#{$index}
+                  width: (100% / $size) * $index
       @if $partition < length($partition-size)
         // Calculate the scale rate after the partition number has changed
         // The scale-factor will affect the final partition scale
@@ -206,6 +224,10 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
           .#{$flexbox}
             & > .#{$item}-rwd-#{$size}
               width: 100% / $offset
+              @if $size > 2
+                @for $index from 2 through $size - 1
+                  &-#{$index}
+                    width: (100% / $size) * $index
     // Vertical flexbox has no width
     .#{$flexbox}.vertical
       & > *
