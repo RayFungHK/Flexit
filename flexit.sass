@@ -86,7 +86,7 @@ $scale-factor: .8
       padding: 0
       margin: 0
 
-    &.vertical
+    &.#{$container-prefix}vertical
       & + .#{$flexbox}
         &[class*="#{$container-prefix}gutters"]
           margin: 0
@@ -110,9 +110,9 @@ $scale-factor: .8
           &-#{$index}
             width: (100% / $size) * $index
 
-  &.vertical
+  &.#{$container-prefix}vertical
     & > *
-      width: auto
+      width: 100%
 
     @each $size in $partition-size
       & > .#{$item}-#{$size}
@@ -184,9 +184,9 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
                   width: (100% / $size) * $index
 
     // Vertical flexbox has no width
-    .#{$flexbox}.vertical
+    .#{$flexbox}.#{$container-prefix}vertical
       & > *
-        width: auto
+        width: 100%
 
   // Breakpoint range
   @media (min-width: $min + 'px') and (max-width: $max + 'px')
@@ -229,6 +229,6 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
                   &-#{$index}
                     width: (100% / $size) * $index
     // Vertical flexbox has no width
-    .#{$flexbox}.vertical
+    .#{$flexbox}.#{$container-prefix}vertical
       & > *
-        width: auto
+        width: 100%
