@@ -225,6 +225,21 @@
 .flexbox > .col-5-4, .flexbox > .col-rwd-5-4 {
   width: 80%;
 }
+.flexbox > .col-6, .flexbox > .col-rwd-6 {
+  width: 16.6666666667%;
+}
+.flexbox > .col-6-2, .flexbox > .col-rwd-6-2 {
+  width: 33.3333333333%;
+}
+.flexbox > .col-6-3, .flexbox > .col-rwd-6-3 {
+  width: 50%;
+}
+.flexbox > .col-6-4, .flexbox > .col-rwd-6-4 {
+  width: 66.6666666667%;
+}
+.flexbox > .col-6-5, .flexbox > .col-rwd-6-5 {
+  width: 83.3333333333%;
+}
 .flexbox > .col-8, .flexbox > .col-rwd-8 {
   width: 12.5%;
 }
@@ -290,6 +305,9 @@
 }
 .flexbox.fi-vertical > .col-5 {
   height: 20%;
+}
+.flexbox.fi-vertical > .col-6 {
+  height: 16.6666666667%;
 }
 .flexbox.fi-vertical > .col-8 {
   height: 12.5%;
@@ -381,6 +399,22 @@
   }
   .flexbox > .col-pg-rg-5-4 {
     width: 80%;
+  }
+
+  .flexbox > .col-pg-rg-6 {
+    width: 16.6666666667%;
+  }
+  .flexbox > .col-pg-rg-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-pg-rg-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-pg-rg-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-pg-rg-6-5 {
+    width: 83.3333333333%;
   }
 
   .flexbox > .col-pg-rg-8 {
@@ -487,6 +521,22 @@
     width: 80%;
   }
 
+  .flexbox > .col-rg-6 {
+    width: 16.6666666667%;
+  }
+  .flexbox > .col-rg-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-rg-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-rg-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-rg-6-5 {
+    width: 83.3333333333%;
+  }
+
   .flexbox > .col-rg-8 {
     width: 12.5%;
   }
@@ -591,6 +641,22 @@
     width: 80%;
   }
 
+  .flexbox > .col-pg-md-6 {
+    width: 16.6666666667%;
+  }
+  .flexbox > .col-pg-md-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-pg-md-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-pg-md-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-pg-md-6-5 {
+    width: 83.3333333333%;
+  }
+
   .flexbox.fi-vertical > * {
     width: 100%;
   }
@@ -619,6 +685,13 @@
     width: 33.3333333333%;
   }
   .flexbox > .col-md-3-2 {
+    width: 66.6666666667%;
+  }
+
+  .flexbox > .col-rwd-3 {
+    width: 50%;
+  }
+  .flexbox > .col-rwd-3-2 {
     width: 66.6666666667%;
   }
 
@@ -666,6 +739,38 @@
   }
   .flexbox > .col-rwd-5-4 {
     width: 80%;
+  }
+
+  .flexbox > .col-md-6 {
+    width: 16.6666666667%;
+  }
+  .flexbox > .col-md-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-md-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-md-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-md-6-5 {
+    width: 83.3333333333%;
+  }
+
+  .flexbox > .col-rwd-6 {
+    width: 25%;
+  }
+  .flexbox > .col-rwd-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-rwd-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-rwd-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-rwd-6-5 {
+    width: 83.3333333333%;
   }
 
   .flexbox > .col-rwd-8 {
@@ -783,6 +888,10 @@
     width: 50%;
   }
 
+  .flexbox > .col-rwd-2 {
+    width: 100%;
+  }
+
   .flexbox > .col-sm-3 {
     width: 33.3333333333%;
   }
@@ -808,7 +917,7 @@
   }
 
   .flexbox > .col-rwd-4 {
-    width: 33.3333333333%;
+    width: 50%;
   }
   .flexbox > .col-rwd-4-2 {
     width: 50%;
@@ -828,6 +937,22 @@
   }
   .flexbox > .col-rwd-5-4 {
     width: 80%;
+  }
+
+  .flexbox > .col-rwd-6 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-rwd-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-rwd-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-rwd-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-rwd-6-5 {
+    width: 83.3333333333%;
   }
 
   .flexbox > .col-rwd-8 {
@@ -947,7 +1072,7 @@
   }
 
   .flexbox > .col-rwd-3 {
-    width: 50%;
+    width: 100%;
   }
   .flexbox > .col-rwd-3-2 {
     width: 66.6666666667%;
@@ -974,6 +1099,22 @@
   }
   .flexbox > .col-rwd-5-4 {
     width: 80%;
+  }
+
+  .flexbox > .col-rwd-6 {
+    width: 50%;
+  }
+  .flexbox > .col-rwd-6-2 {
+    width: 33.3333333333%;
+  }
+  .flexbox > .col-rwd-6-3 {
+    width: 50%;
+  }
+  .flexbox > .col-rwd-6-4 {
+    width: 66.6666666667%;
+  }
+  .flexbox > .col-rwd-6-5 {
+    width: 83.3333333333%;
   }
 
   .flexbox > .col-rwd-8 {
