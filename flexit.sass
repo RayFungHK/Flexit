@@ -2,11 +2,52 @@
 // Define $flexbox as .flexbox
 // Default: flex-wrap: wrap, align-items: flex-start */
 $flexbox: "flexbox"
+$grid: "grid"
 $item: "col"
+$grid-col: "grid-col"
+$grid-span: "gcol"
+$grid-moat: "moat"
 $container-prefix: "fi-"
+$grid-container-prefix: "gr-"
 $partition-size: 1 2 3 4 5 6 8 10
+$grid-max: 12
 $partition-min-size: 100
 $scale-factor: .8
+
+$gap-units: "" 1rem, "-px" 10px, "-em" 1em
+$gap-size: "-s" 0.5, "" 1, "-l" 1.25, "-xl" 1.5, "-xxl" 2
+
+// Grid
+.#{$grid}
+  display: grid
+  @for $size from 1 through $grid-max
+    &.#{$grid-container-prefix}#{$size}, &.#{$grid-container-prefix}rwd-#{$size}
+      grid-template-columns: repeat($size, minmax(0, 1fr))
+  // Gap
+  &.#{$grid-container-prefix}gap
+    @each $unit, $base in $gap-units
+      @each $size, $multiplier in $gap-size
+        &#{$unit + $size}
+          grid-gap: $base * $multiplier
+          gap: $base * $multiplier
+          &.#{$grid-container-prefix}#{$grid-moat}
+            padding: $base * $multiplier
+            &-h
+              padding-left: $base * $multiplier
+              padding-right: $base * $multiplier
+            &-v
+              padding-top: $base * $multiplier
+              padding-bottom: $base * $multiplier
+
+  // Flexbox Alignment
+  $vertical-alignments: "top" start, "bottom" end, "middle" center, "fill" stretch
+  @each $name, $value in $vertical-alignments
+    &.#{$grid-container-prefix}#{$name}
+      align-items: $value
+
+  @for $size from 2 through $grid-max
+    > .#{$grid-span}-#{$size}
+      grid-column: span $size / span $size
 
 .#{$flexbox}
   display: flex
@@ -64,7 +105,7 @@ $scale-factor: .8
 
   // Gutters
   $units: "" 1rem, "-px" 10px, "-em" 1em
-  $gutters-size: "-s" 0.5, "" 1, "-l" 1.5, "-xl" 2, "-xxl" 3
+  $gutters-size: "-s" 0.5, "" 1, "-l" 1.25, "-xl" 1.5, "-xxl" 2
 
   &.#{$container-prefix}gutters
     @each $unit, $base in $units
@@ -159,6 +200,35 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
 
 // Mixin for create each breakpoints media query
 @each $code, $min, $max, $partition in $screen-media
+  // Progressively by min-width
+  @media (min-width: $max + 'px')
+    .#{$grid}
+      @for $size from 1 through $grid-max
+        $mppb: floor($min / $partition-min-size)
+        @if $size <= $mppb
+          &.#{$grid-container-prefix}pg-#{$code}-#{$size}
+            grid-template-columns: repeat($size, minmax(0, 1fr))
+      &.#{$grid-container-prefix}pg-#{$code}-gap
+        @each $unit, $base in $gap-units
+          @each $size, $multiplier in $gap-size
+            &#{$unit + $size}
+              grid-gap: $base * $multiplier
+              gap: $base * $multiplier
+              &.#{$grid-container-prefix}#{$grid-moat}
+                padding: $base * $multiplier
+                &-h
+                  padding-left: $base * $multiplier
+                  padding-right: $base * $multiplier
+                &-v
+                  padding-top: $base * $multiplier
+                  padding-bottom: $base * $multiplier
+
+      @for $size from 2 through $grid-max
+        $mppb: floor($min / $partition-min-size)
+        @if $size <= $mppb
+          > .#{$grid-span}-pg-#{$code}-#{$size}
+            grid-column: span $size / span $size
+
   // Progressively by max-width
   @media (max-width: $max + 'px')
     .#{$flexbox}
@@ -190,6 +260,25 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
 
   // Breakpoint range
   @media (min-width: $min + 'px') and (max-width: $max + 'px')
+    .#{$grid}
+      @for $size from 1 through $grid-max
+        $mppb: floor($min / $partition-min-size)
+        @if $size <= $mppb
+          &.#{$grid-container-prefix}#{$code}-#{$size}
+            grid-template-columns: repeat($size, minmax(0, 1fr))
+        @if $partition < $size
+          $scale: round(max(($size / $partition) * $scale-factor, 1))
+          $offset: min($scale, $size)
+          @if $size > 2
+            &-rwd-#{$size}
+              grid-template-columns: repeat($scale, minmax(0, 1fr))
+
+    @for $size from 2 through $grid-max
+      $mppb: floor($min / $partition-min-size)
+      @if $size <= $mppb
+        > .#{$grid-span}-#{$code}-#{$size}
+          grid-column: span $size / span $size
+
     .#{$flexbox}
       & > .#{$item}-#{$code}-break
         display: block
@@ -215,7 +304,7 @@ $screen-media: "rg" 1025 1280 8, "md" 768 1024 4, "sm" 481 767 3, "xs" 320 480 2
         // Calculate the scale rate after the partition number has changed
         // The scale-factor will affect the final partition scale
         // > 1 less partition in each breakpoint
-        // < 1 more partition  in each breakpoint
+        // < 1 more partition in each breakpoint
         $scale: max((length($partition-size) / $partition) * $scale-factor, 1)
         // Get the offset
         $offset: min(nth($partition-size, max(ceil($index / $scale), 1)), $index)
